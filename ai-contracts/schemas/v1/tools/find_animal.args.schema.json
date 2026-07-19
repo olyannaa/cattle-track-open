@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/tools/find_animal.args.schema.json",
+  "title": "find_animal arguments",
+  "x-tool-name": "find_animal",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "tag"],
+  "properties": {
+    "schema_version": { "$ref": "../common/defs.schema.json#/$defs/schema_version" },
+    "tag": { "$ref": "../common/defs.schema.json#/$defs/tag" },
+    "include_inactive": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "v1",
+      "tag": "1432"
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1"
+    }
+  ]
+}

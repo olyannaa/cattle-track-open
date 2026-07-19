@@ -1,0 +1,22 @@
+.confirm-modal__button-container {
+    display: flex;
+    flex-direction: row;
+}
+.confirm-modal__button {
+    width: 204px;
+}
+
+.confirm-modal__mobile {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 748px) {
+    .confirm-modal__button-container {
+        flex-direction: column;
+    }
+
+    .confirm-modal__button {
+        width: 100%;
+    }
+}

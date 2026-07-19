@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/common/batch-write-report.schema.json",
+  "title": "AI batch write report",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "draft_id", "status", "summary", "items"],
+  "properties": {
+    "schema_version": { "$ref": "defs.schema.json#/$defs/schema_version" },
+    "draft_id": { "$ref": "defs.schema.json#/$defs/uuid" },
+    "status": {
+      "type": "string",
+      "enum": [
+        "preview",
+        "needs_partial_confirmation",
+        "committed",
+        "expired",
+        "cancelled",
+        "__unknown"
+      ]
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total", "resolved", "ambiguous", "not_found", "invalid", "committed", "failed"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "resolved": { "type": "integer", "minimum": 0 },
+        "ambiguous": { "type": "integer", "minimum": 0 },
+        "not_found": { "type": "integer", "minimum": 0 },
+        "invalid": { "type": "integer", "minimum": 0 },
+        "committed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/report_item" }
+    }
+  },
+  "$defs": {
+    "report_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index", "idempotency_key", "state"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "idempotency_key": { "$ref": "defs.schema.json#/$defs/idempotency_key" },
+        "state": {
+          "type": "string",
+          "enum": [
+            "resolved",
+            "ambiguous",
+            "not_found",
+            "invalid",
+            "committed",
+            "failed",
+            "__unknown"
+          ]
+        },
+        "tag": { "$ref": "defs.schema.json#/$defs/tag" },
+        "animal_id": { "$ref": "defs.schema.json#/$defs/uuid" },
+        "candidate_ids": {
+          "type": "array",
+          "items": { "$ref": "defs.schema.json#/$defs/uuid" }
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "error_code": {
+          "type": "string",
+          "maxLength": 120
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "v1",
+      "draft_id": "be7d9e62-9163-43fa-98e5-6ce7a2665317",
+      "status": "needs_partial_confirmation",
+      "summary": {
+        "total": 3,
+        "resolved": 1,
+        "ambiguous": 1,
+        "not_found": 1,
+        "invalid": 0,
+        "committed": 0,
+        "failed": 0
+      },
+      "items": [
+        {
+          "index": 0,
+          "idempotency_key": "voice:daily-action:2026-07-09:1432:move",
+          "state": "resolved",
+          "tag": "1432",
+          "animal_id": "be7d9e62-9163-43fa-98e5-6ce7a2665317"
+        },
+        {
+          "index": 1,
+          "idempotency_key": "voice:daily-action:2026-07-09:1433:move",
+          "state": "ambiguous",
+          "tag": "1433",
+          "candidate_ids": ["be7d9e62-9163-43fa-98e5-6ce7a2665317"]
+        },
+        {
+          "index": 2,
+          "idempotency_key": "voice:daily-action:2026-07-09:9999:move",
+          "state": "not_found",
+          "tag": "9999",
+          "message": "Животное с такой биркой не найдено в организации."
+        }
+      ]
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1",
+      "draft_id": "be7d9e62-9163-43fa-98e5-6ce7a2665317",
+      "status": "preview",
+      "summary": {
+        "total": 1,
+        "resolved": 1
+      },
+      "items": []
+    }
+  ]
+}

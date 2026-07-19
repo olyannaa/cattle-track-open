@@ -1,0 +1,17 @@
+.alert {
+    max-width: 432px;
+    border-radius: 2px;
+    margin-bottom: var(--spacing-xl);
+}
+
+.alert__big {
+    max-width: 532px;
+}
+
+.top-margin-xl {
+    margin-top: var(--spacing-xl);
+}
+
+.bottom-margin-xl {
+    margin-bottom: var(--spacing-xl);
+}

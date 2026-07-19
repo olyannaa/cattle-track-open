@@ -1,0 +1,19 @@
+.netel-form__radio1 {
+    max-width: 148px;
+}
+
+.netel-form__radio2 {
+    max-width: 138px;
+}
+
+.netel-form__radio3 {
+    max-width: 118px;
+}
+
+@media (max-width: 715px) {
+    .netel-form__radio1,
+    .netel-form__radio2,
+    .netel-form__radio3 {
+        max-width: initial;
+    }
+}

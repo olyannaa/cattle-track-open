@@ -1,0 +1,23 @@
+.lineage__col {
+    background-color: var(--neutral);
+    padding: var(--spacing-l);
+    flex: 1;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin: var(--spacing-xl) 0;
+}
+
+.gridItem {
+    display: flex;
+    border: 1px solid var(--neutral);
+    padding: var(--spacing-s) var(--spacing-l);
+}
+
+@media (max-width: 768px) {
+    .gridContainer {
+        grid-template-columns: 1fr;
+    }
+}

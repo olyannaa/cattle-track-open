@@ -1,0 +1,12 @@
+services:
+  cat-asp:
+    build:
+      context: .             
+      dockerfile: Dockerfile
+    container_name: cat-asp
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:5000
+      ASPNETCORE_ENVIRONMENT: Production
+    expose:
+      - "5000"              
+    restart: unless-stopped

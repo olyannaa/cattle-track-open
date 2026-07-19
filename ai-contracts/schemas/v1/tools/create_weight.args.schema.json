@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/tools/create_weight.args.schema.json",
+  "title": "create_weight arguments",
+  "x-tool-name": "create_weight",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "idempotency_key", "tag", "weight", "date", "method"],
+  "properties": {
+    "schema_version": { "$ref": "../common/defs.schema.json#/$defs/schema_version" },
+    "idempotency_key": { "$ref": "../common/defs.schema.json#/$defs/idempotency_key" },
+    "tag": { "$ref": "../common/defs.schema.json#/$defs/tag" },
+    "weight": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 3000,
+      "description": "Weight in kilograms. AI validator must also check date not in future and not before animal birth."
+    },
+    "date": { "$ref": "../common/defs.schema.json#/$defs/date" },
+    "method": {
+      "type": "string",
+      "enum": [
+        "Автоматическая весовая станция",
+        "Ручное взвешивание",
+        "Расчетный метод",
+        "__unknown"
+      ]
+    },
+    "method_raw": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Original method text when method is __unknown."
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 1000
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "method": { "const": "__unknown" }
+        },
+        "required": ["method"]
+      },
+      "then": {
+        "required": ["method_raw"]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "schema_version": "v1",
+      "idempotency_key": "voice:weight:1432:2026-07-09",
+      "tag": "1432",
+      "weight": 412.5,
+      "date": "2026-07-09",
+      "method": "Ручное взвешивание",
+      "notes": "Контрольное взвешивание"
+    },
+    {
+      "schema_version": "v1",
+      "idempotency_key": "voice:weight:1432:unknown-method",
+      "tag": "1432",
+      "weight": 412.5,
+      "date": "2026-07-09",
+      "method": "__unknown",
+      "method_raw": "через весовую рамку"
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1",
+      "idempotency_key": "voice:weight:1432:bad",
+      "tag": "1432",
+      "weight": -1,
+      "date": "2026-07-09",
+      "method": "Ручное взвешивание"
+    },
+    {
+      "schema_version": "v1",
+      "idempotency_key": "voice:weight:1432:unknown-method",
+      "tag": "1432",
+      "weight": 412.5,
+      "date": "2026-07-09",
+      "method": "__unknown"
+    }
+  ]
+}

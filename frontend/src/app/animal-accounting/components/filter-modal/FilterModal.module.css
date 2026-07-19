@@ -1,0 +1,29 @@
+.filter-modal {
+    overflow-y: unset;
+}
+
+.filter-modal__close {
+    place-self: flex-end;
+}
+
+.filter-modal__desc {
+    margin-top: var(--spacing-s);
+    color: var(--secondary);
+}
+
+.filter-modal__btn {
+    margin-top: var(--spacing-l);
+    width: 100%;
+}
+
+.filter-modal__footer {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--global-bg);
+    width: 100%;
+    padding-bottom: var(--spacing-2xl);
+}
+
+.filter-modal__button {
+    width: 100%;
+}

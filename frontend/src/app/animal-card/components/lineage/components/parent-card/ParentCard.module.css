@@ -1,0 +1,12 @@
+.parent-card {
+    border-radius: 0;
+}
+
+.parent-card__link {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.parent-card__info:not(:last-child) {
+    margin-bottom: 8px;
+}

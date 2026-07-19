@@ -1,0 +1,20 @@
+.login__help {
+    margin-top: 12px;
+    color: rgba(140, 140, 140, 1);
+    text-align: center;
+    font-size: 12px;
+}
+
+.button_login {
+    width: 100%;
+}
+
+@media (max-width: 500px) {
+    .form-login__footer {
+        flex-direction: column-reverse;
+    }
+
+    .login__help {
+        margin-top: 0;
+    }
+}

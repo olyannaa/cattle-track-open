@@ -1,0 +1,50 @@
+.content-header {
+    border-radius: 8px;
+    padding: 16px 16px 0;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+    width: 100%;
+}
+
+.title {
+    margin-bottom: 16px;
+}
+
+.title__button_first {
+    width: 264px;
+}
+
+.title__button_second {
+    width: 177px;
+}
+
+.tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+@media (max-width: 940px) {
+    .title {
+        flex-direction: column;
+    }
+
+    .title__buttons {
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+}
+@media (max-width: 767px) {
+    .title__buttons {
+        flex-direction: column;
+    }
+
+    .title__text {
+        font-size: 24px !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .title__button_first {
+        width: 230px;
+    }
+}

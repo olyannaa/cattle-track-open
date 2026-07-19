@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/tools/get_animal_parents.args.schema.json",
+  "title": "get_animal_parents arguments",
+  "x-tool-name": "get_animal_parents",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "tag"],
+  "properties": {
+    "schema_version": { "$ref": "../common/defs.schema.json#/$defs/schema_version" },
+    "tag": { "$ref": "../common/defs.schema.json#/$defs/tag" }
+  },
+  "examples": [
+    {
+      "schema_version": "v1",
+      "tag": "1432"
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1",
+      "tag": ""
+    }
+  ]
+}

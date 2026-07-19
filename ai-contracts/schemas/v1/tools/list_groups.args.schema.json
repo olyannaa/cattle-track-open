@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/tools/list_groups.args.schema.json",
+  "title": "list_groups arguments",
+  "x-tool-name": "list_groups",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version"],
+  "properties": {
+    "schema_version": { "$ref": "../common/defs.schema.json#/$defs/schema_version" },
+    "include_empty": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "v1",
+      "include_empty": true
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1",
+      "include_empty": "yes"
+    }
+  ]
+}

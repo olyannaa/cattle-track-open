@@ -1,0 +1,47 @@
+.reproductive__radio-group {
+    width: 100%;
+}
+
+.reproductive__radio-group .calf {
+    max-width: 432px;
+}
+
+.reproductive__radio-container {
+    display: flex;
+    flex-direction: row;
+    min-width: 100%;
+}
+
+.reproductive__radio-container div:not(:last-child) {
+    margin-right: var(--spacing-l);
+}
+
+@media (max-width: 715px) {
+    .reproductive__radio-container {
+        flex-direction: column;
+        min-width: unset;
+        max-width: 432px;
+    }
+    .reproductive__radio-container div:not(:last-child) {
+        margin-bottom: var(--spacing-s);
+        margin-right: 0;
+    }
+}
+
+.fullscreen-modal .ant-modal {
+    top: 0 !important;
+    margin: 0;
+    padding: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw;
+}
+
+/* Обнуляем отступы внутри */
+.fullscreen-modal .ant-modal-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 16px; /* или 0, если вообще не надо */
+    box-sizing: border-box;
+}

@@ -1,0 +1,26 @@
+.statistics {
+    border-radius: 8px;
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+    width: 100%;
+}
+
+
+
+.statistics-item{
+    border: 1px solid #D9D9D9;
+    min-width: 200px;
+    height: 40px;
+}
+
+.statistics-item__count{
+    font-size: 20px;
+    color: var(--primary)
+}
+
+@media (max-width:501px){
+    .statistics-items{
+        justify-content: center;
+    }
+}

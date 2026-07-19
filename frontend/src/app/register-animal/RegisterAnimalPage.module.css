@@ -1,0 +1,17 @@
+.register-animals__header {
+    background-color: var(--global-bg);
+    box-shadow: var(--block-shadow);
+    border-radius: var(--base-border-radius);
+    padding: var(--spacing-l);
+    padding-bottom: 0;
+    margin-bottom: var(--spacing-l);
+    max-width: 920px;
+}
+
+.register-animals__content {
+    background-color: var(--global-bg);
+    box-shadow: var(--block-shadow);
+    border-radius: var(--base-border-radius);
+    padding: var(--spacing-xl) var(--spacing-2l);
+    max-width: 920px;
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CAT</name>
+    </assembly>
+    <members>
+        <member name="M:CAT.Controllers.AuthController.Login(CAT.Controllers.DTO.LoginDTO)">
+            <summary>
+            Авторизация по логину и паролю на куках
+            </summary>
+            <param name="body"></param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Неправльно введённые данные</response>
+        </member>
+        <member name="M:CAT.Controllers.AuthController.LogOut">
+            <summary>
+            Отзыв кук с токеном
+            </summary>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="401">Не авторизован</response>
+        </member>
+    </members>
+</doc>

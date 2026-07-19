@@ -1,0 +1,132 @@
+.input__tagNumber {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    padding: 0 3px;
+    max-width: 60px;
+}
+
+.text-cell__tagNumber {
+    min-height: 20px;
+    width: 80px;
+}
+
+.input__birthDate {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    padding: 0 3px;
+    max-width: 83px;
+}
+
+.text-cell__birthDate {
+    min-height: 20px;
+    width: 77px;
+}
+
+.input__breed {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    padding: 0 3px;
+    max-width: 100px;
+}
+
+.text-cell__breed {
+    min-height: 20px;
+    width: 100px;
+}
+
+.select__groupName {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    max-width: 200px;
+}
+
+.text-cell__groupName {
+    width: 200px;
+    height: 20px;
+}
+
+.select__status {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    max-width: 96px;
+}
+
+.text-cell__status {
+    height: 20px;
+    width: 100px;
+}
+
+.input__origin {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    padding: 0 3px;
+    max-width: 120px;
+}
+
+.text-cell__origin {
+    height: 20px;
+    width: 120px;
+}
+
+.input__originLocation {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    padding: 0 3px;
+    max-width: 130px;
+}
+
+.text-cell__originLocation {
+    min-height: 20px;
+    width: 130px;
+}
+
+.input__motherTagNumber {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    padding: 0 3px;
+    max-width: 70px;
+}
+
+.text-cell__motherTagNumber {
+    min-height: 20px;
+    width: 80px;
+}
+
+.input__fatherTagNumber {
+    width: 100%;
+    font-size: 14px;
+    height: 20px;
+    padding: 0 3px;
+    max-width: 70px;
+}
+
+.text-cell__fatherTagNumber {
+    min-height: 20px;
+    width: 80px;
+}
+
+@media (max-width: 1440px) {
+    .input__tagNumber {
+        max-width: 54px;
+    }
+
+    .text-cell__tagNumber {
+        width: 48px;
+    }
+
+    .input__birthDate {
+        max-width: 77px;
+    }
+
+    .text-cell__birthDate {
+        width: 72px;
+    }
+}

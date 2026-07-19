@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/tools/get_pregnancies_to_check.args.schema.json",
+  "title": "get_pregnancies_to_check arguments",
+  "x-tool-name": "get_pregnancies_to_check",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version"],
+  "properties": {
+    "schema_version": { "$ref": "../common/defs.schema.json#/$defs/schema_version" },
+    "due_before": { "$ref": "../common/defs.schema.json#/$defs/date" }
+  },
+  "examples": [
+    {
+      "schema_version": "v1"
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v2"
+    }
+  ]
+}

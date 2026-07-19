@@ -1,0 +1,10 @@
+.text-cell {
+    height: 20px;
+    max-width: 100px;
+}
+
+.input {
+    height: 20px;
+    max-width: 90px;
+    font-size: 14px;
+}

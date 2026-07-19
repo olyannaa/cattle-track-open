@@ -1,0 +1,14 @@
+@media (max-width: 500px) {
+    .wrapper-delete-actions {
+        flex-wrap: wrap-reverse;
+    }
+
+    .delete-actions__button {
+        width: 100%;
+    }
+
+    .wrapper-button {
+        justify-content: space-between;
+        width: 100%;
+    }
+}

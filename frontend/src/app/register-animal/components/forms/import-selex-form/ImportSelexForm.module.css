@@ -1,0 +1,26 @@
+.import-selex__dragger {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    max-width: var(--max-input-width);
+}
+
+.import-selex__additional-title {
+    margin-top: var(--spacing-m);
+    margin-bottom: var(--spacing-m);
+}
+
+.import-selex__additional-container {
+    background-color: var(--grey-bg);
+    padding: var(--spacing-l);
+    margin-bottom: var(--spacing-m);
+    max-width: var(--max-input-width);
+    border: 2px;
+}
+
+.import-selex__additional-subtitle {
+    margin-bottom: var(--spacing-m);
+}
+
+.import-selex__additional-list {
+    max-width: var(--max-input-width);
+}

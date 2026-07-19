@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/common/defs.schema.json",
+  "title": "Cattle Track AI common schema definitions",
+  "type": "object",
+  "$defs": {
+    "schema_version": {
+      "type": "string",
+      "const": "v1"
+    },
+    "uuid": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "tag": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "Animal tag as spoken or typed by the user. Resolution is exact within OrganizationId. Duplicate exact tags are allowed and must return ambiguous."
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 120,
+      "pattern": "^[A-Za-z0-9._:-]+$",
+      "description": "Stable client-generated key for retry-safe write commit."
+    },
+    "unknown_enum": {
+      "type": "string",
+      "const": "__unknown",
+      "description": "Escape enum value. The deterministic validator must stop write commit and ask for clarification unless a safe mapping exists."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

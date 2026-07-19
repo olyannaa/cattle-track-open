@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/common/entity-resolution.schema.json",
+  "title": "Cattle Track AI entity resolution models",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "entity", "state", "input", "resolved", "candidates", "message"],
+  "properties": {
+    "schema_version": { "$ref": "defs.schema.json#/$defs/schema_version" },
+    "entity": {
+      "type": "string",
+      "enum": ["animal", "group", "medicine", "date"]
+    },
+    "state": {
+      "type": "string",
+      "enum": ["resolved", "ambiguous", "not_found"]
+    },
+    "input": { "$ref": "#/$defs/entity_ref" },
+    "resolved": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/resolved_entity" }
+      ]
+    },
+    "candidates": {
+      "type": "array",
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/disambiguation_candidate" }
+    },
+    "message": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "maxLength": 1000 }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "state": { "const": "resolved" } },
+        "required": ["state"]
+      },
+      "then": {
+        "properties": {
+          "candidates": { "maxItems": 0 }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "state": { "const": "not_found" } },
+        "required": ["state"]
+      },
+      "then": {
+        "properties": {
+          "resolved": { "type": "null" },
+          "candidates": { "maxItems": 0 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "entity_ref": {
+      "oneOf": [
+        { "$ref": "#/$defs/animal_ref" },
+        { "$ref": "#/$defs/group_ref" },
+        { "$ref": "#/$defs/medicine_ref" },
+        { "$ref": "#/$defs/date_ref" }
+      ]
+    },
+    "animal_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "tag"],
+      "properties": {
+        "kind": { "const": "animal" },
+        "tag": { "$ref": "defs.schema.json#/$defs/tag" },
+        "role_hint": {
+          "type": "string",
+          "enum": ["cow", "bull", "calf", "heifer", "any", "__unknown"]
+        },
+        "source_text": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "group_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "group" },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "source_text": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "medicine_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "medicine" },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "source_text": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "date_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "const": "date" },
+        "value": { "$ref": "defs.schema.json#/$defs/date" },
+        "relative": {
+          "type": "string",
+          "enum": ["today", "yesterday", "tomorrow", "__unknown"]
+        },
+        "source_text": {
+          "type": "string",
+          "maxLength": 500
+        }
+      },
+      "anyOf": [
+        { "required": ["value"] },
+        { "required": ["relative"] }
+      ]
+    },
+    "resolved_entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "display"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Resolved entity id. Usually Guid for animal/group/medicine, normalized date string for date entities."
+        },
+        "display": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "normalized_value": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "disambiguation_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "display"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Candidate entity id. Usually Guid for animal/group/medicine."
+        },
+        "display": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "animal": { "$ref": "#/$defs/animal_candidate" },
+        "group": { "$ref": "#/$defs/group_candidate" },
+        "medicine": { "$ref": "#/$defs/medicine_candidate" }
+      }
+    },
+    "animal_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag"],
+      "properties": {
+        "tag": { "$ref": "defs.schema.json#/$defs/tag" },
+        "type": { "type": "string", "maxLength": 255 },
+        "status": { "type": "string", "maxLength": 255 },
+        "birth_date": { "$ref": "defs.schema.json#/$defs/date" },
+        "group_name": { "type": "string", "maxLength": 255 },
+        "breed": { "type": "string", "maxLength": 255 },
+        "gender": { "type": "string", "maxLength": 255 },
+        "mother_tag": { "$ref": "defs.schema.json#/$defs/tag" },
+        "father_tags": {
+          "type": "array",
+          "items": { "$ref": "defs.schema.json#/$defs/tag" }
+        },
+        "identifiers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "group_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "maxLength": 255 },
+        "type_name": { "type": "string", "maxLength": 255 },
+        "location": { "type": "string", "maxLength": 255 },
+        "description": { "type": "string", "maxLength": 1000 }
+      }
+    },
+    "medicine_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "maxLength": 255 },
+        "substance": { "type": "string", "maxLength": 255 },
+        "factory": { "type": "string", "maxLength": 255 },
+        "withdrawal_period": { "type": "string", "maxLength": 255 }
+      }
+    },
+    "identifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 255 },
+        "value": { "type": "string", "minLength": 1, "maxLength": 255 }
+      }
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "v1",
+      "entity": "animal",
+      "state": "resolved",
+      "input": {
+        "kind": "animal",
+        "tag": "523",
+        "role_hint": "bull",
+        "source_text": "бык с биркой 523"
+      },
+      "resolved": {
+        "id": "be7d9e62-9163-43fa-98e5-6ce7a2665317",
+        "display": "523, Бык, 2023-04-18, группа Производители"
+      },
+      "candidates": [],
+      "message": null
+    },
+    {
+      "schema_version": "v1",
+      "entity": "animal",
+      "state": "ambiguous",
+      "input": {
+        "kind": "animal",
+        "tag": "523",
+        "role_hint": "bull",
+        "source_text": "бык с биркой 523"
+      },
+      "resolved": null,
+      "candidates": [
+        {
+          "id": "be7d9e62-9163-43fa-98e5-6ce7a2665317",
+          "display": "523, Бык, 2023-04-18, группа Производители",
+          "animal": {
+            "tag": "523",
+            "type": "Бык",
+            "status": "Активное",
+            "birth_date": "2023-04-18",
+            "group_name": "Производители",
+            "identifiers": [
+              {
+                "name": "RFID",
+                "value": "643001234567890"
+              }
+            ]
+          }
+        },
+        {
+          "id": "c27d9e62-9163-43fa-98e5-6ce7a2665317",
+          "display": "523, Бык, 2024-01-11, группа Молодняк",
+          "animal": {
+            "tag": "523",
+            "type": "Бык",
+            "status": "Активное",
+            "birth_date": "2024-01-11",
+            "group_name": "Молодняк"
+          }
+        }
+      ],
+      "message": "Найдено несколько животных с биркой 523. Уточните по дате рождения, группе или дополнительному идентификатору."
+    },
+    {
+      "schema_version": "v1",
+      "entity": "animal",
+      "state": "not_found",
+      "input": {
+        "kind": "animal",
+        "tag": "523",
+        "source_text": "животное 523"
+      },
+      "resolved": null,
+      "candidates": [],
+      "message": "В этой организации не найдено животное с биркой 523."
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1",
+      "entity": "animal",
+      "state": "not_found",
+      "input": {
+        "kind": "animal",
+        "tag": "523"
+      },
+      "resolved": null,
+      "candidates": [
+        {
+          "id": "be7d9e62-9163-43fa-98e5-6ce7a2665317",
+          "display": "523"
+        }
+      ],
+      "message": "not found cannot return candidates"
+    }
+  ]
+}

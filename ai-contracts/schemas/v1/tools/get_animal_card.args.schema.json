@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/tools/get_animal_card.args.schema.json",
+  "title": "get_animal_card arguments",
+  "x-tool-name": "get_animal_card",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version"],
+  "properties": {
+    "schema_version": { "$ref": "../common/defs.schema.json#/$defs/schema_version" },
+    "tag": { "$ref": "../common/defs.schema.json#/$defs/tag" },
+    "animal_id": { "$ref": "../common/defs.schema.json#/$defs/uuid" }
+  },
+  "anyOf": [
+    { "required": ["tag"] },
+    { "required": ["animal_id"] }
+  ],
+  "examples": [
+    {
+      "schema_version": "v1",
+      "tag": "1432"
+    },
+    {
+      "schema_version": "v1",
+      "animal_id": "be7d9e62-9163-43fa-98e5-6ce7a2665317"
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1",
+      "animal_id": "1432"
+    }
+  ]
+}

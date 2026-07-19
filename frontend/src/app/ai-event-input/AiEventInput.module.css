@@ -1,0 +1,486 @@
+.aiEventInput {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto auto auto;
+    gap: 12px;
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    padding: 0 16px 14px;
+    color: #171414;
+    background: #fff;
+}
+
+.thread {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+    margin: 0 -16px;
+    padding: 20px 20px 18px;
+    border-bottom: 1px solid #ebe5df;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.welcomeCard {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 85%;
+}
+
+.assistantMeta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 4px;
+    color: #7c706b;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.assistantAvatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #ff4d35;
+    background: #ffe9e5;
+    font-size: 12px;
+}
+
+.assistantMessage,
+.assistantBubble {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-self: flex-start;
+    width: fit-content;
+    max-width: 85%;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 16px;
+    border-top-left-radius: 2px;
+    background: #f6f2ee;
+    box-shadow: none;
+}
+
+.welcomeText {
+    margin: 0;
+    color: #151211;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.625;
+}
+
+.turnGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.userMessage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.userBubble {
+    align-self: flex-end;
+    max-width: 85%;
+    padding: 10px 16px;
+    border-radius: 16px;
+    border-bottom-right-radius: 2px;
+    color: #fff;
+    background: #ff432f;
+    box-shadow: none;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.625;
+}
+
+.userBubble :global(.ant-typography) {
+    color: inherit;
+}
+
+.userTime {
+    padding-right: 4px;
+    color: #7c706b;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.message {
+    margin: 0;
+    color: #151211;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.625;
+    white-space: pre-wrap;
+}
+
+.transcriptPill {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    color: #7c463c;
+    background: #fff8f6;
+    font-size: 12px;
+}
+
+.livePanel {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    color: #ff432f;
+    background: #fff2ef;
+}
+
+.equalizer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 30px;
+}
+
+.equalizer span {
+    width: 4px;
+    height: 12px;
+    border-radius: 999px;
+    background: #ff432f;
+    animation: equalize 0.82s ease-in-out infinite;
+}
+
+.equalizer span:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.equalizer span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.equalizer span:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.liveTranscript {
+    min-width: 0;
+    color: #ff432f;
+    font-size: 13px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.composerShell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 8px;
+    align-items: center;
+    min-height: 48px;
+    padding: 4px 6px 4px 20px;
+    border: 1px solid #e7ded9;
+    border-radius: 999px;
+    background: #fffdfb;
+    box-shadow: none;
+}
+
+.textArea {
+    resize: none;
+    border: none;
+    color: #342d2a;
+    background: transparent;
+    box-shadow: none;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.textArea:focus,
+.textArea:hover {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.textArea::placeholder {
+    color: #8c8581;
+}
+
+.sendButton {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    background: #ffab9f;
+    font-size: 16px;
+}
+
+.sendButton:hover,
+.sendButton:focus {
+    color: #fff !important;
+    background: #ff432f !important;
+}
+
+.voiceDock {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    gap: 12px;
+    min-height: 48px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 999px;
+    color: #ff432f;
+    background: #ffe9e5;
+    cursor: pointer;
+    transition:
+        transform 0.16s ease,
+        background 0.16s ease,
+        box-shadow 0.16s ease;
+}
+
+.voiceDock:hover,
+.voiceDock:focus-visible {
+    background: #ffded8;
+    box-shadow: 0 14px 32px rgba(255, 67, 47, 0.14);
+    transform: translateY(-1px);
+}
+
+.voiceDock:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+}
+
+.voiceDock_recording {
+    color: #fff;
+    background: #ff432f;
+    animation: voicePulse 1.25s ease-in-out infinite;
+}
+
+.voiceButtonShell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.primaryMicButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.voiceState {
+    color: currentColor;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+.disclaimer {
+    justify-self: center;
+    color: #7c706b;
+    font-size: 11px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.previewList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 2px;
+}
+
+.previewItem {
+    display: grid;
+    grid-template-columns: minmax(80px, 116px) 1fr;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid rgba(5, 5, 5, 0.06);
+    border-radius: 12px;
+    background: #fffaf8;
+}
+
+.writeCandidate {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #eadfd8;
+    border-radius: 10px;
+    color: #2c2522;
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.writeCandidate:hover,
+.writeCandidate:focus-visible {
+    border-color: #ff6a57;
+    background: #fff7f5;
+    outline: none;
+}
+
+.writeCandidate:disabled {
+    cursor: not-allowed;
+    opacity: 0.62;
+}
+
+.writeCandidateAction {
+    color: #ff432f;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.historyList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+.historyItem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ebe5df;
+    border-radius: 8px;
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.historyItem:hover,
+.historyItem_active {
+    border-color: #ffab9f;
+    background: #fff8f6;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 2px;
+}
+
+.disambiguation {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.candidateGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.candidateCard {
+    border-radius: 18px;
+    background: #fff;
+}
+
+.candidateDetails {
+    margin: 4px 0 0;
+    color: rgba(0, 0, 0, 0.62);
+}
+
+@keyframes voicePulse {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 67, 47, 0.28);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(255, 67, 47, 0);
+    }
+}
+
+@keyframes equalize {
+    0%,
+    100% {
+        height: 10px;
+    }
+
+    50% {
+        height: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .aiEventInput {
+        padding: 0 14px 14px;
+    }
+
+    .thread {
+        margin: 0 -14px;
+        padding: 18px 16px 16px;
+    }
+
+    .welcomeCard,
+    .assistantMessage,
+    .assistantBubble,
+    .userBubble {
+        max-width: 100%;
+    }
+
+    .assistantMessage,
+    .assistantBubble {
+        padding: 10px 14px;
+    }
+
+    .welcomeText,
+    .userBubble {
+        font-size: 14px;
+    }
+
+    .composerShell {
+        grid-template-columns: minmax(0, 1fr) 42px;
+        min-height: 48px;
+        padding-left: 18px;
+    }
+
+    .sendButton {
+        width: 36px;
+        height: 36px;
+    }
+
+    .voiceDock {
+        min-height: 48px;
+        padding: 12px 18px;
+    }
+
+    .voiceState {
+        font-size: 14px;
+    }
+
+    .previewItem {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}

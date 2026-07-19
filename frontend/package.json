@@ -1,0 +1,48 @@
+{
+    "name": "cattle_track_frontend",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite --port 3000",
+        "build": "tsc -b && node --max_old_space_size=4096 node_modules/vite/bin/vite.js build",
+        "lint": "eslint .",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@ant-design/charts": "^2.3.0",
+        "@ant-design/plots": "^2.4.0",
+        "@ionic/react": "^8.5.1",
+        "@reduxjs/toolkit": "^2.6.1",
+        "@telegram-auth/react": "^1.0.4",
+        "antd": "^5.24.4",
+        "dayjs": "^1.11.13",
+        "fuse.js": "^7.1.0",
+        "lodash": "^4.17.21",
+        "moment": "^2.30.1",
+        "plotly.js": "^3.0.1",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-plotly.js": "^2.6.0",
+        "react-redux": "^9.2.0",
+        "react-router-dom": "^7.4.0",
+        "uuid": "^11.1.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.21.0",
+        "@types/react": "^19.0.10",
+        "@types/react-dom": "^19.0.4",
+        "@vitejs/plugin-react": "^4.3.4",
+        "eslint": "^9.21.0",
+        "eslint-plugin-react-hooks": "^5.1.0",
+        "eslint-plugin-react-refresh": "^0.4.19",
+        "globals": "^15.15.0",
+        "playwright": "^1.61.1",
+        "typescript": "~5.7.2",
+        "typescript-eslint": "^8.24.1",
+        "vite": "^6.2.0"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-darwin-arm64": "^4.41.1"
+    }
+}

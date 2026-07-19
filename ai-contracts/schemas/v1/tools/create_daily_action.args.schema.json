@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/tools/create_daily_action.args.schema.json",
+  "title": "create_daily_action arguments",
+  "x-tool-name": "create_daily_action",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "batch_idempotency_key", "items"],
+  "properties": {
+    "schema_version": { "$ref": "../common/defs.schema.json#/$defs/schema_version" },
+    "batch_idempotency_key": { "$ref": "../common/defs.schema.json#/$defs/idempotency_key" },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/daily_action_item" },
+      "description": "Each item is previewed and committed independently. One invalid item must not rollback the whole AI batch."
+    }
+  },
+  "$defs": {
+    "daily_action_type": {
+      "type": "string",
+      "enum": [
+        "Осмотры",
+        "Обработка",
+        "Вакцинации и обработки",
+        "Лечение",
+        "Перевод",
+        "Выбытие",
+        "Исследования",
+        "Присвоение номеров",
+        "Изменение половозрастной группы",
+        "__unknown"
+      ]
+    },
+    "daily_action_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["idempotency_key", "tag", "type", "date"],
+      "properties": {
+        "idempotency_key": { "$ref": "../common/defs.schema.json#/$defs/idempotency_key" },
+        "tag": { "$ref": "../common/defs.schema.json#/$defs/tag" },
+        "type": { "$ref": "#/$defs/daily_action_type" },
+        "type_raw": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subtype": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "performed_by": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "result": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "medicine": {
+          "type": "string",
+          "maxLength": 255,
+          "description": "Medicine name or resolved medicine Guid string. Validator resolves names before commit."
+        },
+        "dose": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "old_group_id": { "$ref": "../common/defs.schema.json#/$defs/uuid" },
+        "new_group_id": { "$ref": "../common/defs.schema.json#/$defs/uuid" },
+        "new_group_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "group_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "old_type": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "new_type": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "date": { "$ref": "../common/defs.schema.json#/$defs/date" },
+        "next_date": { "$ref": "../common/defs.schema.json#/$defs/date" },
+        "research_name": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "material_type": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "identification_value": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "type": { "const": "__unknown" } },
+            "required": ["type"]
+          },
+          "then": { "required": ["type_raw"] }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "Перевод" } },
+            "required": ["type"]
+          },
+          "then": {
+            "anyOf": [
+              { "required": ["new_group_id"] },
+              { "required": ["new_group_name"] },
+              { "required": ["group_name"] }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "Выбытие" } },
+            "required": ["type"]
+          },
+          "then": { "required": ["subtype"] }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "Исследования" } },
+            "required": ["type"]
+          },
+          "then": { "required": ["research_name"] }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "Присвоение номеров" } },
+            "required": ["type"]
+          },
+          "then": { "required": ["subtype", "identification_value"] }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "Изменение половозрастной группы" } },
+            "required": ["type"]
+          },
+          "then": { "required": ["old_type", "new_type"] }
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "v1",
+      "batch_idempotency_key": "voice:daily-action:2026-07-09:batch-1",
+      "items": [
+        {
+          "idempotency_key": "voice:daily-action:2026-07-09:1432:move",
+          "tag": "1432",
+          "type": "Перевод",
+          "date": "2026-07-09",
+          "new_group_id": "be7d9e62-9163-43fa-98e5-6ce7a2665317",
+          "notes": "Перевод после осмотра"
+        }
+      ]
+    },
+    {
+      "schema_version": "v1",
+      "batch_idempotency_key": "voice:daily-action:2026-07-09:batch-unknown",
+      "items": [
+        {
+          "idempotency_key": "voice:daily-action:2026-07-09:1432:unknown",
+          "tag": "1432",
+          "type": "__unknown",
+          "type_raw": "поставь на карантин",
+          "date": "2026-07-09"
+        }
+      ]
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1",
+      "batch_idempotency_key": "voice:daily-action:bad",
+      "items": [
+        {
+          "idempotency_key": "voice:daily-action:bad:1432",
+          "tag": "1432",
+          "type": "Перевод",
+          "date": "2026-07-09"
+        }
+      ]
+    },
+    {
+      "schema_version": "v1",
+      "batch_idempotency_key": "voice:daily-action:bad-unknown",
+      "items": [
+        {
+          "idempotency_key": "voice:daily-action:bad-unknown:1432",
+          "tag": "1432",
+          "type": "__unknown",
+          "date": "2026-07-09"
+        }
+      ]
+    }
+  ]
+}

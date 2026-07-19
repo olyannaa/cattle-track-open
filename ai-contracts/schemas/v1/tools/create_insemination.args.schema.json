@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cattle-track.local/ai-contracts/schemas/v1/tools/create_insemination.args.schema.json",
+  "title": "create_insemination arguments",
+  "x-tool-name": "create_insemination",
+  "x-tool-version": "v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "batch_idempotency_key", "items"],
+  "properties": {
+    "schema_version": { "$ref": "../common/defs.schema.json#/$defs/schema_version" },
+    "batch_idempotency_key": { "$ref": "../common/defs.schema.json#/$defs/idempotency_key" },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/insemination_item" },
+      "description": "Batch item may expand to several backend DTO rows when cow_tags contains more than one cow."
+    }
+  },
+  "$defs": {
+    "insemination_type": {
+      "type": "string",
+      "enum": [
+        "Искусственное",
+        "Естественное",
+        "Эмбрион",
+        "__unknown"
+      ]
+    },
+    "insemination_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["idempotency_key", "cow_tags", "date", "insemination_type"],
+      "properties": {
+        "idempotency_key": { "$ref": "../common/defs.schema.json#/$defs/idempotency_key" },
+        "cow_tags": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": { "$ref": "../common/defs.schema.json#/$defs/tag" }
+        },
+        "date": { "$ref": "../common/defs.schema.json#/$defs/date" },
+        "insemination_type": { "$ref": "#/$defs/insemination_type" },
+        "insemination_type_raw": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sperm_batch": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "sperm_manufacturer": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "bull_tags": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": { "$ref": "../common/defs.schema.json#/$defs/tag" }
+        },
+        "embryo_id": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "embryo_manufacturer": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "technician": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "bull_name": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "insemination_type": { "const": "__unknown" } },
+            "required": ["insemination_type"]
+          },
+          "then": { "required": ["insemination_type_raw"] }
+        },
+        {
+          "if": {
+            "properties": { "insemination_type": { "const": "Естественное" } },
+            "required": ["insemination_type"]
+          },
+          "then": { "required": ["bull_tags"] }
+        },
+        {
+          "if": {
+            "properties": { "insemination_type": { "const": "Эмбрион" } },
+            "required": ["insemination_type"]
+          },
+          "then": { "required": ["embryo_id"] }
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "v1",
+      "batch_idempotency_key": "voice:insemination:2026-07-09:batch-1",
+      "items": [
+        {
+          "idempotency_key": "voice:insemination:2026-07-09:1432",
+          "cow_tags": ["1432"],
+          "date": "2026-07-09",
+          "insemination_type": "Искусственное",
+          "sperm_batch": "A-17",
+          "bull_name": "Бык 55",
+          "technician": "Иванов"
+        }
+      ]
+    },
+    {
+      "schema_version": "v1",
+      "batch_idempotency_key": "voice:insemination:2026-07-09:batch-natural",
+      "items": [
+        {
+          "idempotency_key": "voice:insemination:2026-07-09:1432:natural",
+          "cow_tags": ["1432", "1433"],
+          "date": "2026-07-09",
+          "insemination_type": "Естественное",
+          "bull_tags": ["55"]
+        }
+      ]
+    }
+  ],
+  "x-invalid-examples": [
+    {
+      "schema_version": "v1",
+      "batch_idempotency_key": "voice:insemination:bad",
+      "items": [
+        {
+          "idempotency_key": "voice:insemination:bad:1432",
+          "cow_tags": ["1432"],
+          "date": "2026-07-09",
+          "insemination_type": "Естественное"
+        }
+      ]
+    },
+    {
+      "schema_version": "v1",
+      "batch_idempotency_key": "voice:insemination:bad-unknown",
+      "items": [
+        {
+          "idempotency_key": "voice:insemination:bad-unknown:1432",
+          "cow_tags": ["1432"],
+          "date": "2026-07-09",
+          "insemination_type": "__unknown"
+        }
+      ]
+    }
+  ]
+}

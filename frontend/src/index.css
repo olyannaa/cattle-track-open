@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+@import './styles/font-styles.css';
+@import './styles/wrapper-styles.css';
+@import './styles/form-styles.css';
+@import './styles/alert-styles.css';
+
+:root {
+    --block-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
+    --block-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
+    --global-bg: #ffffff;
+    --grey-bg: #f5f5f5;
+    --grey-border: #d9d9d9;
+    --primary: #ff4218;
+    --volcano: #ffd8bf;
+    --volcano-accent: #fa541c;
+    --secondary: rgba(0, 0, 0, 0.45);
+    --neutral: #f0f0f0;
+    --base-border-radius: 8px;
+    --spacing-xs: 4px;
+    --spacing-s: 8px;
+    --spacing-m: 12px;
+    --spacing-l: 16px;
+    --spacing-2l: 20px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 32px;
+    --max-input-width: 432px;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+}
+
+.radio-border {
+    border: 1px solid var(--grey-border);
+    border-radius: 2px;
+    padding: 8px var(--spacing-m);
+    flex: 1;
+    background-color: #fff;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+a,
+a:link,
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+aside,
+nav,
+footer,
+header,
+section,
+main {
+    display: block;
+}
+
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+* ul,
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+img,
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+address {
+    font-style: normal;
+}
+input,
+textarea,
+button,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+button,
+input[type='submit'] {
+    display: inline-block;
+    box-shadow: none;
+    background-color: transparent;
+    background: none;
+    cursor: pointer;
+}
+
+input:focus,
+input:active,
+button:focus,
+button:active {
+    outline: none;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+label {
+    cursor: pointer;
+}
+
+legend {
+    display: block;
+}
+
+input[type='file'] {
+    max-width: 100%;
+}
+
+.ant-menu-item.ant-menu-item-selected {
+    position: relative;
+}
+
+.ant-menu-item.ant-menu-item-selected::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--color-primary-border, #ff4218);
+}
+
+.ant-menu-item .anticon {
+    opacity: 0.5;
+}
+
+.ant-menu-item.ant-menu-item-selected .anticon {
+    opacity: 1;
+}
+
+.ant-tabs-top > .ant-tabs-nav::before {
+    border-bottom: none;
+}
+
+._select__status_ck601_75 .ant-select-selector {
+    padding: 0 3px !important;
+}
+
+/* Цвет иконки в драггере */
+.ant-upload-wrapper .ant-upload-drag p.ant-upload-drag-icon .anticon {
+    color: #ff4218;
+}
+
+.ant-upload-wrapper .ant-upload-drag {
+    border-radius: 2px;
+    border: var(--grey-border) solid 1px;
+}
+
+/** Чтобы не было нижнего отступа у табов */
+.ant-tabs-top > .ant-tabs-nav {
+    margin: 0;
+}
+
+.ant-drawer .ant-drawer-footer {
+    border-top: none;
+}
+
+.link {
+    color: unset;
+    cursor: pointer;
+}
+
+.link:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}

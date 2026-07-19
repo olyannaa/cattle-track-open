@@ -1,0 +1,31 @@
+.edit-group-modal__input {
+    max-width: 424px;
+    flex: 1;
+}
+
+.edit-group-modal__button {
+    width: 204px;
+}
+
+.edit-group-modal .ant-modal {
+    max-width: 464px;
+}
+
+.edit-group-modal__button-container {
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+@media (max-width: 748px) {
+    .edit-group-modal__button-container {
+        flex-direction: column;
+    }
+
+    .edit-group-modal__button-container .edit-group-modal__button:first-child {
+        margin-bottom: var(--spacing-s);
+    }
+
+    .edit-group-modal__button {
+        width: 100%;
+    }
+}

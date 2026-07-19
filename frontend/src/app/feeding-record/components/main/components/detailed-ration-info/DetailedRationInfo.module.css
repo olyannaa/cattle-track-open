@@ -1,0 +1,23 @@
+.ration-info__wrapper {
+    display: grid;
+    margin: var(--spacing-l) 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 400px) {
+    .ration-info__wrapper {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 401px) and (max-width: 777px) {
+    .ration-info__wrapper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .ration-info__wrapper {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}

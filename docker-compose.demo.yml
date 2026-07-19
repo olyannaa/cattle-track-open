@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cattletrack_demo}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - cattle-track-demo-postgres:/var/lib/postgresql/data
+      - ./backend/testdata/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./backend/testdata/ai_seed.sql:/docker-entrypoint-initdb.d/02_ai_seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  backend:
+    depends_on:
+      redis:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__PostgresDB: Host=postgres;Port=5432;Database=${POSTGRES_DB:-postgres};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:-cattletrack_demo}
+      AiAssistant__Llm__Provider: ${AI_LLM_PROVIDER:-disabled}
+      AiAssistant__Llm__Endpoint: ${AI_LLM_ENDPOINT:-}
+      AiAssistant__Llm__Model: ${AI_LLM_MODEL:-}
+      AiAssistant__Llm__OutputMode: ${AI_LLM_OUTPUT_MODE:-constrained-json}
+      AiAssistant__Asr__Provider: ${AI_ASR_PROVIDER:-disabled}
+      AiAssistant__Asr__Endpoint: ${AI_ASR_ENDPOINT:-}
+      AiAssistant__Asr__Model: ${AI_ASR_MODEL:-}
+
+  frontend:
+    build:
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:5001/api/}
+
+volumes:
+  cattle-track-demo-postgres:

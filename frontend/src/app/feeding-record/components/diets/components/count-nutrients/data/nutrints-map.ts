@@ -1,0 +1,18 @@
+export const nutrientsMap = [
+    { key: 'totalDryMatter', label: 'Сухое вещество' },
+    { key: 'totalNEMaintenance', label: 'Чистая энергия для поддержания жизни' },
+    { key: 'totalNEGain', label: 'Чистая энергия для прироста' },
+    { key: 'totalCrudeProtein', label: 'Сырой протеин' },
+    { key: 'totalDegradableProtein', label: 'Расщепляемый протеин' },
+    { key: 'totalCrudeFat', label: 'Сырой жир' },
+    { key: 'totalByproduct', label: 'Побочный продукт, % от СВ' },
+    { key: 'totalRoughage', label: 'Грубые корма, % от СВ' },
+    { key: 'totalNDF', label: 'НДК грубых кормов' },
+    { key: 'totalForageNDF', label: 'Нейтрально-детергентная клетчатка' },
+    { key: 'totalStarch', label: 'Крахмал' },
+    { key: 'totalCalcium', label: 'Кальций' },
+    { key: 'totalPhosphorus', label: 'Фосфор' },
+    { key: 'totalSalt', label: 'Соль' },
+    { key: 'totalPotassium', label: 'Калий' },
+    { key: 'totalSulfur', label: 'Сера' },
+];

@@ -1,0 +1,21 @@
+.group-info__container {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 768px) {
+    .ration-info__wrapper {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+}
+
+.group-info__item {
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: var(--spacing-s) var(--spacing-l);
+    margin-bottom: 1px;
+    box-shadow: 0 0 -1px rgba(0, 0, 0, 0.05);
+    justify-content: space-between;
+}

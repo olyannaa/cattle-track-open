@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+.venv-asr/
+.venv-tts/
+__pycache__/
+.DS_Store
+bin/
+obj/

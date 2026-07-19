@@ -1,0 +1,55 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: cattle-track-redis
+    networks:
+      default:
+        aliases:
+          - cat-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend/CAT
+      dockerfile: Dockerfile
+    container_name: cattle-track-backend
+    depends_on:
+      - redis
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+      ASPNETCORE_URLS: http://0.0.0.0:5000
+      ConnectionStrings__PostgresDB: ${POSTGRES_CONNECTION_STRING:-}
+      RedisCacheOptions__Configuration: ${REDIS_CONFIGURATION:-redis:6379}
+      RedisCacheOptions__InstanceName: ${REDIS_INSTANCE_NAME:-LinksCachinglocal}
+      TelegramBot__ApiKey: ${TELEGRAM_BOT_API_KEY:-}
+      Enviroment__BaseFrontUrl: ${FRONTEND_PUBLIC_URL:-http://localhost:3000}
+      Enviroment__LocalAdminId: ${LOCAL_ADMIN_ROLE_ID:-00000000-0000-0000-0000-000000000000}
+      Enviroment__OrgAdminId: ${ORG_ADMIN_ROLE_ID:-00000000-0000-0000-0000-000000000000}
+      AiAssistant__Llm__Provider: ${AI_LLM_PROVIDER:-disabled}
+      AiAssistant__Llm__Endpoint: ${AI_LLM_ENDPOINT:-}
+      AiAssistant__Llm__Model: ${AI_LLM_MODEL:-}
+      AiAssistant__Llm__OutputMode: ${AI_LLM_OUTPUT_MODE:-constrained-json}
+      AiAssistant__Llm__Temperature: ${AI_LLM_TEMPERATURE:-0}
+      AiAssistant__Llm__MaxTokens: ${AI_LLM_MAX_TOKENS:-256}
+      AiAssistant__Llm__TimeoutSeconds: ${AI_LLM_TIMEOUT_SECONDS:-45}
+      AiAssistant__Asr__Provider: ${AI_ASR_PROVIDER:-disabled}
+      AiAssistant__Asr__Endpoint: ${AI_ASR_ENDPOINT:-}
+      AiAssistant__Asr__Model: ${AI_ASR_MODEL:-}
+    ports:
+      - "${BACKEND_PORT:-5001}:5000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:5001/api/}
+    container_name: cattle-track-frontend
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    restart: unless-stopped

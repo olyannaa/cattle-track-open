@@ -1,0 +1,121 @@
+{
+  "organization": {
+    "id": "90000000-0000-0000-0000-000000000001",
+    "name": "AI Test Organization"
+  },
+  "groups": {
+    "main": "90000000-0000-0000-0002-000000000001",
+    "young": "90000000-0000-0000-0002-000000000002",
+    "quarantine": "90000000-0000-0000-0002-000000000003"
+  },
+  "ambiguity": {
+    "zero_matches": {
+      "tag": "0000",
+      "expected_count": 0
+    },
+    "one_match": {
+      "tag": "1432",
+      "animal_id": "90000000-0000-0000-0003-000000000001",
+      "expected_count": 1
+    },
+    "two_to_five_matches": {
+      "tag": "523",
+      "animal_ids": [
+        "90000000-0000-0000-0003-000000000101",
+        "90000000-0000-0000-0003-000000000102",
+        "90000000-0000-0000-0003-000000000103"
+      ],
+      "expected_count": 3
+    },
+    "more_than_five_matches": {
+      "tag": "777",
+      "animal_ids": [
+        "90000000-0000-0000-0003-000000000201",
+        "90000000-0000-0000-0003-000000000202",
+        "90000000-0000-0000-0003-000000000203",
+        "90000000-0000-0000-0003-000000000204",
+        "90000000-0000-0000-0003-000000000205",
+        "90000000-0000-0000-0003-000000000206"
+      ],
+      "expected_count": 6
+    }
+  },
+  "duplicates": {
+    "weight": {
+      "animal_id": "90000000-0000-0000-0003-000000000001",
+      "date": "2026-07-09"
+    },
+    "daily_action": {
+      "animal_id": "90000000-0000-0000-0003-000000000001",
+      "type": "Лечение",
+      "subtype": "Лечение",
+      "date": "2026-07-09"
+    },
+    "insemination": {
+      "cow_id": "90000000-0000-0000-0003-000000000001",
+      "date": "2026-07-09",
+      "insemination_type": "Естественное"
+    }
+  },
+  "partial_invalid_batch": {
+    "create_weight": [
+      {
+        "expected": "valid",
+        "animal_id": "90000000-0000-0000-0003-000000000003",
+        "date": "2026-07-09",
+        "weight": 305,
+        "method": "Ручное взвешивание"
+      },
+      {
+        "expected": "ambiguous",
+        "tag": "523",
+        "reason": "three animals with this tag exist in the test organization"
+      },
+      {
+        "expected": "not_found",
+        "tag": "0000"
+      },
+      {
+        "expected": "invalid",
+        "animal_id": "90000000-0000-0000-0003-000000000001",
+        "date": "2026-07-09",
+        "weight": 421,
+        "method": "Ручное взвешивание",
+        "reason": "duplicate weight date for animal"
+      },
+      {
+        "expected": "invalid",
+        "animal_id": "90000000-0000-0000-0003-000000000004",
+        "date": "2026-07-11",
+        "weight": 255,
+        "method": "Ручное взвешивание",
+        "reason": "future date relative to fixture current date 2026-07-10"
+      }
+    ],
+    "create_daily_action": [
+      {
+        "expected": "valid",
+        "animal_id": "90000000-0000-0000-0003-000000000003",
+        "type": "Перевод",
+        "subtype": "Перевод",
+        "date": "2026-07-09",
+        "new_group_id": "90000000-0000-0000-0002-000000000001"
+      },
+      {
+        "expected": "invalid",
+        "animal_id": "90000000-0000-0000-0003-000000000001",
+        "type": "Лечение",
+        "subtype": "Лечение",
+        "date": "2026-07-09",
+        "reason": "duplicate daily action"
+      },
+      {
+        "expected": "invalid",
+        "animal_id": "90000000-0000-0000-0003-000000000004",
+        "type": "Присвоение номеров",
+        "date": "2026-07-09",
+        "reason": "missing required cascade subtype/identification value"
+      }
+    ]
+  }
+}

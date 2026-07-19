@@ -1,0 +1,45 @@
+.page {
+    background: var(--global-bg);
+    padding: 24px 20px 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+}
+
+.layout-chart {
+    padding: 24px;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 8px;
+    background-color: rgb(249, 248, 248);
+    height: 529px;
+}
+
+.layout-chart__title {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    color: #000;
+}
+
+.layout-chart__description {
+    color: rgb(104, 97, 99);
+    font-size: 14px;
+}
+
+.layout-chart__loading {
+    height: 400px;
+}
+
+.is-fetching {
+    opacity: 0.7;
+    pointer-events: none;
+    cursor: progress;
+}
+
+@media (max-width: 500px) {
+    .page {
+        border-radius: 0;
+    }
+    .layout-chart {
+        padding: 12px;
+    }
+}
