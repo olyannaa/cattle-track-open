@@ -2,11 +2,11 @@
 
 Дата: 2026-07-09.
 
-Область: MVP tool-calling контракты Cattle Track AI в `ai-contracts/schemas/v1`.
+Область: tool-calling контракты Cattle Track AI в `ai-contracts/schemas/v1`.
 
 ## 1. Источник истины
 
-Каталог инструментов и MVP-скоуп: `../00-tool-catalog.md`.
+Каталог инструментов и основной скоуп: `../00-tool-catalog.md`.
 
 Backend-аудит фактических DTO, сервисов и скрытых правил: `../06-backend-audit.md`.
 

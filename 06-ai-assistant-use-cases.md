@@ -1,4 +1,4 @@
-# AI Assistant MVP Use Cases
+# AI Assistant основной контур Use Cases
 
 Дата: 2026-07-14
 
@@ -271,7 +271,7 @@ Cancel может быть выполнен:
 
 ## Поток 8. Daily Action
 
-MVP daily action включает:
+Daily action включает:
 
 - осмотр;
 - обработку;

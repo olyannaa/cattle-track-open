@@ -28,7 +28,7 @@ Cattle Track Fullstack - приложение для учета животных
 - Backend: ASP.NET Core 8, C#, Entity Framework Core, PostgreSQL, Redis, Swagger.
 - Frontend: React 19, TypeScript 5.7, Vite 6, Ant Design, Redux Toolkit.
 - Tests: xUnit для backend, `tsc`/Vite build для frontend.
-- AI MVP: локальный/удаленный ASR, OpenAI-compatible LLM, JSON tool calling, contract schemas.
+- AI assistant: локальный/удаленный ASR, OpenAI-compatible LLM, JSON tool calling, contract schemas.
 
 ## Важные директории
 
@@ -76,7 +76,7 @@ Backend:
 dotnet run --project backend/CAT/CAT.csproj
 ```
 
-Полный AI MVP local run описан в `AI_MVP_LOCAL_RUN.md`. Production/runtime endpoints задаются только через environment variables.
+Полный локальный AI-запуск описан в `AI_LOCAL_RUN.md`. Production/runtime endpoints задаются только через environment variables.
 
 ## Проверки
 
@@ -114,7 +114,7 @@ AI contract schemas:
 
 Запускай проверки, соответствующие изменению. Для узких правок достаточно targeted tests; для изменений в shared AI/backend/frontend flow лучше запускать несколько уровней.
 
-## AI Assistant MVP
+## AI Assistant
 
 Ключевой пользовательский сценарий: фермер вводит текстом или голосом команду на русском языке, backend распознает намерение, резолвит сущности и выполняет безопасный read/write tool.
 
@@ -125,7 +125,7 @@ AI contract schemas:
 - Не доверяй LLM как источнику истины. Backend обязан валидировать tool args и права доступа.
 - Для ASR учитывай доменные исправления и формат браузерной записи `webm/opus`.
 - Не ломай constrained JSON / tool calling протоколы ради удобства UI.
-- При работе с моделями смотри инструкции в `AI_MVP_LOCAL_RUN.md` и AI-документы в `docs/ai/`.
+- При работе с моделями смотри инструкции в `AI_LOCAL_RUN.md` и AI-документы в `docs/ai/`.
 
 ## Backend правила
 
@@ -150,8 +150,8 @@ AI contract schemas:
 При изменении поведения обновляй ближайший документ:
 
 - `README.md` / `README.en.md` - общая разработка и запуск.
-- `AI_MVP_LOCAL_RUN.md` - локальный AI runtime.
-- `06-ai-assistant-mvp-use-cases.md` - use cases AI-ассистента.
+- `AI_LOCAL_RUN.md` - локальный AI runtime.
+- `06-ai-assistant-use-cases.md` - use cases AI-ассистента.
 - `docs/ai/*.md` - архитектура, каталог инструментов, research plan и roadmap.
 - `docs/ai-development/*.md` - использование AI-инструментов при разработке.
 - `ai-contracts/*.md` - контракты, entity resolution, validation rules.
@@ -166,7 +166,7 @@ AI contract schemas:
 
 Если задача связана с AI:
 
-1. Прочитай `06-ai-assistant-mvp-use-cases.md`.
+1. Прочитай `06-ai-assistant-use-cases.md`.
 2. Прочитай `docs/ai/00-tool-catalog.md` и `docs/ai/01-architecture-spec.md`.
 3. Прочитай `ai-contracts/AI_VALIDATION_RULES.md`.
 4. Проверь backend файлы в `backend/CAT/Services/Ai`.

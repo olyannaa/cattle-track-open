@@ -28,7 +28,7 @@ This document covers AI tools used while developing the project, not the AI feat
 
 ## Known AI Failure Modes
 
-- AI can overstate production readiness when metrics are only MVP-level.
+- AI can overstate production readiness when metrics are only core-level.
 - AI can generate schemas and datasets that drift apart; `validate_ai_dataset.py` is the guard.
 - AI can propose broad refactors that are too risky before defense; changes must stay scoped.
 - AI-generated documentation must be checked against actual commands and files.

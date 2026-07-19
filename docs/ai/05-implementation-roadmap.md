@@ -8,7 +8,7 @@
 - не обходит существующую авторизацию, мультитенантность и бизнес-логику;
 - имеет измеримые результаты по ASR, tool-calling, structured output и валидатору;
 - обеспечивает измеримый production-бюджет скорости и совместное размещение ASR+LLM на целевом сервере;
-- честно разделяет реализованный MVP, полный каталог тулов и будущие доменные доработки.
+- честно разделяет реализованный AI-контур, полный каталог тулов и будущие доменные доработки.
 
 ## 0. Исходные документы и границы
 
@@ -25,16 +25,16 @@
 - Не строим RAG-бота.
 - Не строим multi-agent/router/LangGraph.
 - Не делаем MCP-сервер внутри продукта.
-- Не дообучаем свои ASR/LLM в рамках MVP.
+- Не дообучаем свои ASR/LLM в рамках текущего этапа.
 - Не фиксируем конкретную модель до quality + latency + resource + end-to-end экспериментов на RTX 5070.
 - Не используем 32B-модель в production на 12 GiB VRAM, если она требует регулярной выгрузки ASR/LLM.
 - Не даем LLM прямой путь к записи в БД.
 - Не добавляем административные тулы: организации, сотрудники, роли, приглашения, аутентификация.
 - Все операции строго в рамках `OrganizationId`.
 
-### MVP-подмножество
+### Ключевой AI-контур
 
-MVP реализуется и бенчмаркается первым. Полный каталог остается как архитектурный охват продукта.
+Ключевой AI-контур реализуется и бенчмаркается первым. Полный каталог остается как архитектурный охват продукта.
 
 Read:
 - `find_animal`
@@ -56,7 +56,7 @@ Write:
 ### 1.1 Backend-аудит
 
 Работы:
-- найти фактические контроллеры, DTO, сервисы и EF-модели для MVP-тулов;
+- найти фактические контроллеры, DTO, сервисы и EF-модели для ключевых инструментов;
 - проверить текущие маршруты, request/response-контракты и enum-значения;
 - выписать бизнес-правила, которые живут внутри сервисов, а не в DTO;
 - отдельно проверить места, где write-операции вызывают каскады: движение животного, выбытие, осеменение, беременность, daily actions;
@@ -92,7 +92,7 @@ Write:
 
 Результаты:
 - зафиксированный security backlog;
-- решение: что чинится до MVP, что не блокирует MVP, что запрещено оборачивать в тулы.
+- решение: что чинится до релиза, что не блокирует AI-контур, что запрещено оборачивать в тулы.
 
 ## 2. Фаза проектирования AI-контракта
 
@@ -101,14 +101,14 @@ Write:
 ### 2.1 Tool schemas
 
 Работы:
-- для MVP-тулов описать JSON Schema аргументов;
+- для ключевых инструментов описать JSON Schema аргументов;
 - для enum'ов добавить escape-значение или безопасный fallback, как указано в архитектуре;
 - определить обязательные и условные поля;
 - для batch-write явно описать массивы, частичные ошибки и idempotency keys;
 - завести версионирование схем.
 
 Результаты:
-- каталог JSON Schema для MVP-тулов;
+- каталог JSON Schema для ключевых инструментов;
 - документ с правилами совместимости схем;
 - тесты на валидность схем.
 
@@ -311,7 +311,7 @@ Ablation:
 
 Результаты:
 - короткий технический отчет;
-- решение: включать ли TTS в MVP demo или оставить как опциональный режим.
+- решение: включать ли TTS в demo или оставить как опциональный режим.
 
 Текущий статус: Silero v5 уже прошёл локальный warm benchmark; повторить smoke на Ryzen 7 7700 и держать TTS на CPU, не занимая VRAM.
 
@@ -331,9 +331,9 @@ Ablation:
 - rollback на текущие baseline-модели;
 - доказательство, что обычный запрос не вызывает выгрузку модели.
 
-## 5. Фаза backend MVP
+## 5. Фаза backend AI-контура
 
-Цель: реализовать серверный AI-контур для MVP-тулов без прямой записи LLM в БД.
+Цель: реализовать серверный AI-контур для ключевых инструментов без прямой записи LLM в БД.
 
 ### 5.1 Каркас AI-модуля
 
@@ -364,7 +364,7 @@ Ablation:
 - agent loop работает на mock LLM;
 - тесты на limit, duplicate call, final answer, failed tool.
 
-### 5.3 Read-тулы MVP
+### 5.3 Read-тулы AI-контура
 
 Работы по тулам:
 - `find_animal`: точный поиск бирки в рамках организации, disambiguation;
@@ -379,7 +379,7 @@ Ablation:
 - ambiguity/not found не маскируются;
 - ответы адаптированы для текста и голоса.
 
-### 5.4 Write-тулы MVP
+### 5.4 Write-тулы AI-контура
 
 Работы по тулам:
 - `create_weight`: вес, дата, метод, проверка веса и даты;
@@ -421,7 +421,7 @@ Ablation:
 - полный след draft/confirm/commit;
 - возможность разбирать ошибки после demo и экспериментов.
 
-## 6. Фаза frontend MVP
+## 6. Фаза frontend AI-контура
 
 Цель: добавить пользовательский AI-ввод без переписывания существующих форм.
 
@@ -531,7 +531,7 @@ Ablation:
 - список ограничений;
 - demo script.
 
-## 9. Расширение после MVP
+## 9. Расширение после базового контура
 
 Цель: постепенно покрыть полный каталог из `00-tool-catalog.md` тем же паттерном.
 
@@ -550,7 +550,7 @@ Ablation:
 
 ## 10. Разрез работ по тулам
 
-### MVP read-тулы
+### Ключевой AI-контур read-тулы
 
 | Тул | Этапы работ | Датасет | Тесты |
 |---|---|---|---|
@@ -561,7 +561,7 @@ Ablation:
 | `get_pregnancies_to_check` | adapter, summary/list mode | single-read | пустой список, несколько записей |
 | `list_groups` | adapter, group summary | single-read | группы разных типов |
 
-### MVP write-тулы
+### Ключевой AI-контур write-тулы
 
 | Тул | Этапы работ | Датасет | Тесты |
 |---|---|---|---|
@@ -569,11 +569,11 @@ Ablation:
 | `create_daily_action` | schema, batch resolver, enum cascade, partial preview, commit | batch-write, adversarial, fault-injection | перевод, выбытие, препарат, partial batch |
 | `create_insemination` | schema, cow/bull resolver, validator, draft, commit | single-write, batch-write | тип осеменения, неизвестная корова, каскад беременности |
 
-### Post-MVP группы тулов
+### Дальнейшие группы тулов
 
 | Группа | Когда делать | Особые риски |
 |---|---|---|
-| Medicine CRUD | после daily action MVP | дубли имен, свободный текст vs Guid |
+| Medicine CRUD | после daily action flow | дубли имен, свободный текст vs Guid |
 | Reproduction full | после `create_insemination` | каскады беременности/отела |
 | Feeding | отдельной фазой | проценты 0-100, сумма 100%, неочевидные конверсии |
 | Group delete/edit | после security fixes | org-scope, блокировки удаления |
@@ -622,7 +622,7 @@ Ablation:
 
 ## 12. План повторного model-selection и миграции
 
-Этот блок заменяет старую последовательность model research для уже собранного MVP. Backend/frontend-функции и датасеты не пересобираются с нуля: сначала актуализируются evaluation strata, затем меняется только model/runtime слой и связанные prompt/parser/config.
+Этот блок заменяет старую последовательность model research для уже собранного AI-контура. Backend/frontend-функции и датасеты не пересобираются с нуля: сначала актуализируются evaluation strata, затем меняется только model/runtime слой и связанные prompt/parser/config.
 
 ### Этап R1 — подготовка, 1–2 дня
 
@@ -643,7 +643,7 @@ Ablation:
 
 - LLM research winner: `Qwen3.5-9B Q4_K_M` — semantic pass@1 62.5%, test pass^3 73.91%, full loop p95 3.10 с;
 - LLM fast/resource fallback: `Qwen3.5-4B Q4_K_M` — pass@1 50.0%, p95 4.40 с;
-- `T-lite-it-2.1 Q5_K_M` исключен из MVP shortlist: pass@1 39.58%, single-write 0/11, no-tool 0/4;
+- `T-lite-it-2.1 Q5_K_M` исключен из model shortlist: pass@1 39.58%, single-write 0/11, no-tool 0/4;
 - финальный LLM runtime: `Qwen3.5-9B Q4_K_M` + constrained JSON Schema; pass@1 68.75%, p95 2.256 с, runtime 48/48;
 - финальный ASR: `Whisper-large-v3-turbo` + `faster-whisper` FP16; WER 9.09%, бирки 47/47, p95 0.149 с;
 - совместный resource gate: 9,186 MiB из 12,227 MiB, запас 3,041 MiB;
@@ -683,7 +683,7 @@ Ablation:
 ### Неделя 1
 
 - День 1: backend/frontend инвентаризация, security baseline.
-- День 2: tool schemas MVP, entity resolution spec, validator spec.
+- День 2: tool schemas AI-контура, entity resolution spec, validator spec.
 - День 3-4: сбор и разметка текстового датасета, seed-база.
 - День 5: начало ASR-датасета, первые backend-моки agent loop.
 
@@ -696,7 +696,7 @@ Ablation:
 
 ### Неделя 3
 
-- День 11-12: backend AI каркас, read-тулы MVP.
+- День 11-12: backend AI каркас, read-тулы AI-контура.
 - День 13-14: write draft/confirm infrastructure.
 - День 15: `create_weight` end-to-end.
 
@@ -716,18 +716,18 @@ Ablation:
 - demo script;
 - документация ограничений.
 
-Если срок жестко ограничен двумя неделями, то недели 1-2 становятся research/MVP prototype, а production-quality frontend/backend polish переносится в следующий этап.
+Если срок жестко ограничен двумя неделями, то недели 1-2 становятся research/working prototype, а production-quality frontend/backend polish переносится в следующий этап.
 
-## 13. Definition of Done для MVP
+## 13. Definition of Done для текущего контура
 
-MVP считается готовым, если:
+AI-контур считается готовым, если:
 - все 6 read-тулов работают через agent loop;
 - все 3 write-тула создают draft и пишут в БД только после confirm;
 - LLM не имеет прямого пути к commit;
 - есть disambiguation для 0/2+ совпадений;
 - есть partial batch preview;
 - есть audit событий agent loop и commit;
-- есть unit/integration/state-based тесты по MVP;
+- есть unit/integration/state-based тесты по AI-контуру;
 - есть датасет и результаты исследований;
 - выбранные ASR/LLM/validator решения подтверждены на своих данных;
 - ASR+LLM одновременно размещаются на целевом сервере без unload/reload в обычном запросе;
@@ -750,7 +750,7 @@ MVP считается готовым, если:
 | ASR и LLM по отдельности быстрые, вместе не помещаются | совместный benchmark, VRAM peak и запрет unload/reload в normal path |
 | История диалога замедляет каждый следующий запрос | ограниченный context, измерение 1/4/8/12 сообщений, summary только при необходимости |
 | Квантизация портит русский tool-calling | сравнение Q4/Q5/Q6 на одном dev split и non-inferiority gate |
-| Разрастание scope до 55 тулов | MVP first, полный каталог как roadmap |
+| Разрастание scope до 55 тулов | сначала ключевой AI-контур, полный каталог как roadmap |
 | Дублирование frontend-форм | `form.setFieldsValue(...)` в существующие формы |
 | Скрытые backend-каскады | таблица hidden rules и validator tests |
 

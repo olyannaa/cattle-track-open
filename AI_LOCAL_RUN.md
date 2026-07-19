@@ -1,6 +1,6 @@
-# AI MVP local run
+# AI local run
 
-This is the local runtime path for the CattleTrack AI MVP.
+This is the local runtime path for the CattleTrack AI assistant.
 
 ## Models
 

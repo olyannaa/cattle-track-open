@@ -203,7 +203,7 @@ def no_tool() -> list[dict[str, Any]]:
             "no-tool",
             utterance,
             [],
-            result("no_tool", "Запрос относится к реальной системе, но для него нет MVP AI tool schema.", capability=capability),
+            result("no_tool", "Запрос относится к реальной системе, но для него нет подходящей AI tool schema.", capability=capability),
         ))
     return rows
 
